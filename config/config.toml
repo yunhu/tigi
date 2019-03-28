@@ -1,0 +1,26 @@
+[dev]
+    [dev.redis]
+        ip = "4.4.32.224:2232"
+        db = 0
+        pass = "igera"
+    [dev.mysql]
+        ip = "46.94.222.228"
+        port = 3306
+        pass = "kkkkk"
+    [dev.cache]
+        ip = "47.94.3.224:1221"
+        db = 0
+        pass = "tigera"
+    [dev.server]
+        port = 8088
+[online]
+    [online.redis]
+        ip = "1.1.1.1:9221"
+        db = 0
+        pass = "tigera"
+    [online.mysql]
+        ip = "47.24.132.124"
+        port = 3306
+        pass = "kkkkk"
+    [online.server]
+        port = 8088
