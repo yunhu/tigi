@@ -1,7 +1,6 @@
 package common
 
 import (
-	"tigi/config"
 	"crypto"
 	"encoding/json"
 	"fmt"
@@ -9,17 +8,16 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"tigi/config"
 )
-
 
 const (
 	go_develop_mode = "GODEVELOPMODE"
-	config_path = "/src/4mq/config/config.toml"
-	gopath = "GOPATH"
-
+	config_path     = "/src/4mq/config/config.toml"
+	gopath          = "GOPATH"
 )
-func Md5(str string) string {
 
+func Md5(str string) string {
 
 	m := crypto.MD5.New()
 	io.WriteString(m, str)
@@ -28,17 +26,18 @@ func Md5(str string) string {
 
 }
 
-func GetConfig()  config.Conf{
+func GetConfig() config.Conf {
+	fmt.Println(os.Getenv(gopath))
 	conf := config.DB{}
 	path := os.Getenv(gopath)
 	filePath := path + config_path
 	mode := os.Getenv(go_develop_mode)
-	if _,err := toml.DecodeFile(filePath,&conf); err != nil {
+	if _, err := toml.DecodeFile(filePath, &conf); err != nil {
 		panic(err)
-	}else{
+	} else {
 		if mode == "dev" {
 			return conf.Dev
-		}else {
+		} else {
 			return conf.Online
 		}
 	}

@@ -1,15 +1,12 @@
 package main
 
 import (
-"tigi/common"
-"tigi/router"
-"fmt"
-"strconv"
-"net/http"
+	"fmt"
+	"net/http"
+	"strconv"
+	"tigi/common"
+	"tigi/router"
 )
-
-
-
 
 func main() {
 
@@ -20,6 +17,5 @@ func main() {
 	ports := strconv.Itoa(config.Server.Port)
 	fmt.Println("start with port " + ports)
 	//启动服务
-	http.ListenAndServe(":" + ports, nil)
+	http.ListenAndServe(":"+ports, nil)
 }
-
