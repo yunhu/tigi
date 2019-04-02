@@ -13,7 +13,7 @@ import (
 
 const (
 	go_develop_mode = "GODEVELOPMODE"
-	config_path     = "/src/4mq/config/config.toml"
+	config_path     = "/src/tigi/config/config.toml"
 	gopath          = "GOPATH"
 )
 

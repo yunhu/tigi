@@ -14,6 +14,7 @@ func main() {
 	config := common.GetConfig()
 	//注册路由
 	router.Register()
+
 	ports := strconv.Itoa(config.Server.Port)
 	fmt.Println("start with port " + ports)
 	//启动服务
