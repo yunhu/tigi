@@ -6,7 +6,9 @@ PACKAGE_NAME = $(PACKAGE_ROOT)$(SUB_PACKAGE)
 APP      := $(shell basename $(PACKAGE_NAME))
 OUTPUT := $(CURDIR)/output/bin/
 .DEFAULT: build
+
 build:
+	go fmt ./...
 	go build  -o "$(OUTPUT)$(APP)" main.go
 run:
 	nohup $(OUTPUT)$(APP) &

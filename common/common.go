@@ -2,6 +2,7 @@ package common
 
 import (
 	"crypto"
+	"encoding/hex"
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/gin-gonic/gin"
@@ -14,8 +15,8 @@ const (
 	go_develop_mode = "GODEVELOPMODE"
 )
 
+//sting转md5
 func Md5(str string) string {
-
 	m := crypto.MD5.New()
 	io.WriteString(m, str)
 	md5 := fmt.Sprintf("%x", m.Sum(nil))
@@ -23,6 +24,14 @@ func Md5(str string) string {
 
 }
 
+//byte类型 转md5
+func Md5Byte(b []byte) string {
+	m := crypto.MD5.New()
+	m.Write([]byte(b))
+	return hex.EncodeToString(m.Sum(nil))
+}
+
+//获取配置
 func GetConfig() config.Conf {
 	conf := config.DB{}
 	dir, _ := os.Getwd()
@@ -44,4 +53,3 @@ func GetConfig() config.Conf {
 	}
 
 }
-

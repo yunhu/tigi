@@ -1,19 +1,13 @@
 package model
 
-type User struct {
-	ID   int
-	Name string
-	Age  int
-	Sex  int
-}
-
-func (u User) TableName() string {
-	return "user"
-
-}
+import (
+	"fmt"
+	"tigi/common"
+)
 
 func Test() {
-
+	u := common.User{}
+	fmt.Println(u)
 
 	//创建
 	//u := User{Name: "zyh", Age: 333, Sex: 1}

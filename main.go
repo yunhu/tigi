@@ -16,6 +16,6 @@ func main() {
 	router.Register(engine)
 	ports := strconv.Itoa(config.Server.Port)
 	//启动服务
-	engine.Run(":"+ports)
+	engine.Run(":" + ports)
 
 }
