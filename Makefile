@@ -4,10 +4,14 @@ PACKAGE_ROOT := $(shell git remote -v | grep '^origin\s.*(fetch)$$' | awk '{prin
 PACKAGE_NAME = $(PACKAGE_ROOT)$(SUB_PACKAGE)
 
 APP      := $(shell basename $(PACKAGE_NAME))
-
-.DEFAULT: all
-all: build
+OUTPUT := $(CURDIR)/output/bin/
+.DEFAULT: build
 build:
-	go build  -o $($APP) main.go
+	go build  -o "$(OUTPUT)$(APP)" main.go
+run:
+	nohup $(OUTPUT)$(APP) &
+stop:
+	ps -ef |grep $(APP) |grep -v grep|awk '{print $$2}'|xargs kill -9
 
-.PHONY: all build
+
+.PHONY: build stop run
