@@ -1,22 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"github.com/gin-gonic/gin"
 	"strconv"
 	"tigi/common"
 	"tigi/router"
 )
 
 func main() {
-
 	//初始化配置
 	config := common.GetConfig()
+	//gin 初始化引擎
+	engine := gin.Default()
 	//注册路由
-	router.Register()
-
+	router.Register(engine)
 	ports := strconv.Itoa(config.Server.Port)
-	fmt.Println("start with port " + ports)
 	//启动服务
-	http.ListenAndServe(":"+ports, nil)
+	engine.Run(":"+ports)
+
 }

@@ -1,11 +1,10 @@
 package controller
 
 import (
-	"fmt"
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
-func (this *Ctl) Index(w http.ResponseWriter, r *http.Request)  {
-	fmt.Fprintf(w,"hello")
+func Index(g *gin.Context)  {
+	g.String(200,"ok")
 	//common.Msg(w,0,"hello","")
 }
