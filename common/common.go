@@ -33,23 +33,22 @@ func Md5Byte(b []byte) string {
 
 //获取配置
 func GetConfig() config.Conf {
-	conf := config.DB{}
+	conf := config.Conf{}
 	dir, _ := os.Getwd()
-	filePath := dir + "/config/config.toml"
 	mode := os.Getenv(go_develop_mode)
+	if mode != "dev" {
+		mode = "online"
+		gin.SetMode(gin.ReleaseMode)
+		fmt.Println("现在默认是线上环境，如果要切换到线下请执行 export GODEVELOPMODE=dev")
+	} else {
+		gin.SetMode(gin.DebugMode)
+		fmt.Println("现在是在测试环境")
+	}
+	filePath := dir + "/config/config.toml." + mode
 	if _, err := toml.DecodeFile(filePath, &conf); err != nil {
 		panic(err)
 	} else {
-		if mode == "dev" {
-			gin.SetMode(gin.DebugMode)
-			fmt.Println("现在是在测试环境")
-
-			return conf.Dev
-		} else {
-			gin.SetMode(gin.ReleaseMode)
-			fmt.Println("现在默认是线上环境，如果要切换到线下请执行 export GODEVELOPMODE=dev")
-			return conf.Online
-		}
+		return conf
 	}
 
 }
