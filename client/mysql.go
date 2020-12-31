@@ -1,8 +1,9 @@
 package client
 
 import (
-	"fmt"
 	"gorm.io/gorm"
+	"strconv"
+	"gorm.io/driver/mysql"
 	"tigi/config"
 )
 
@@ -33,9 +34,7 @@ func GetMysqlClient(DbName string) *gorm.DB {
 func OpenMysql(conf *config.Conf) {
 
 	for _,v:= range conf.Mysql{
-		fmt.Println(v)
-	}
-/*		timeout := strconv.FormatInt(v.Timeout, 10)
+		timeout := strconv.FormatInt(v.Timeout, 10)
 
 		dsn := v.User + ":" + v.Pass + "@(" + v.IP + ")/" + v.DbName + "?charset=utf8&parseTime=True&loc=Local&timeout="+timeout+"s"
 		db, err := gorm.Open(mysql.Open(dsn),&gorm.Config{})
@@ -44,7 +43,7 @@ func OpenMysql(conf *config.Conf) {
 		}else{
 			MysqlHandle[v.DbName] = db
 		}
-	}*/
+	}
 }
 
 //检测mysql配置

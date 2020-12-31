@@ -46,8 +46,8 @@ func OpenRedis(conf *config.Conf) {
 			DB:       int(v.DbIndex),
 			DialTimeout: time.Duration(v.Timeout) ,
 		})
-		if rc ==nil{
-			panic("a")
+		if rc.Ping() != nil{
+			panic("redis 初始化失败")
 		}else{
 			RedisHandle[v.DbName]=rc
 		}
