@@ -8,16 +8,15 @@ type Conf struct {
 
 type redis struct {
 	IP      string `toml:"ip"`
-	DbIndex int64    `toml:"dbIndex"`
+	DbIndex int64  `toml:"dbIndex"`
 	Pass    string `toml:"pass"`
 	DbName  string `toml:"dbName"`
-	Timeout  int64 `toml:"timeout"`
 }
 
 type mysql struct {
-	IP     string `toml:"ip"`
-	DbName string `toml:"dbName"`
-	Pass   string `toml:"pass"`
-	User   string `toml:"user"`
-	Timeout  int64 `toml:"timeout"`
+	IP      string `toml:"ip"`
+	DbName  string `toml:"dbName"`
+	Pass    string `toml:"pass"`
+	User    string `toml:"user"`
+	Timeout int64  `toml:"timeout"`
 }

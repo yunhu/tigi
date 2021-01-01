@@ -1,9 +1,9 @@
 package client
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 	"tigi/config"
-	"time"
 )
 
 const (
@@ -15,7 +15,7 @@ var RedisHandle map[string]*redis.Client = nil
 //初始化redis
 func InitRedis(conf *config.Conf) {
 	if RedisHandle == nil {
-		 OpenRedis(conf)
+		OpenRedis(conf)
 	}
 }
 
@@ -39,17 +39,20 @@ func OpenRedis(conf *config.Conf) {
 	if len(conf.Redis[0].IP) < 3 {
 		return
 	}
-	for _,v := range conf.Redis{
+	for _, v := range conf.Redis {
 		rc := redis.NewClient(&redis.Options{
 			Addr:     v.IP,
 			Password: v.Pass,
 			DB:       int(v.DbIndex),
-			DialTimeout: time.Duration(v.Timeout) ,
 		})
-		if rc.Ping() != nil{
+		err := rc.Ping().Err()
+
+		if err != nil {
+			fmt.Println(err.Error())
 			panic("redis 初始化失败")
-		}else{
-			RedisHandle[v.DbName]=rc
+		} else {
+			RedisHandle = make(map[string]*redis.Client)
+			RedisHandle[v.DbName] = rc
 		}
 	}
 }

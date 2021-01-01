@@ -5,7 +5,8 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 	"strconv"
-	"tigi/common"
+	"tigi/model"
+	"tigi/st"
 )
 
 //
@@ -13,19 +14,15 @@ func GetUser(g *gin.Context) {
 	g.JSON(200, "")
 }
 func AddUser(g *gin.Context) {
-	u := common.User{}
-	ID, _ := g.GetPostForm("ID")
+	u := st.UserModel{}
 	Name, _ := g.GetPostForm("name")
 	Age, _ := g.GetPostForm("age")
 	Sex, _ := g.GetPostForm("sex")
-
-	id, _ := strconv.Atoi(ID)
-	u.ID = id
 	u.Name = Name
-	age, _ := strconv.Atoi(Age)
-	u.Age = age
-	sex, _ := strconv.Atoi(Sex)
-	u.Sex = sex
+	age, _ := strconv.ParseInt(Age, 10, 64)
+	u.Age = uint64(age)
+	sex, _ := strconv.ParseInt(Sex, 10, 64)
+	u.Sex = uint64(sex)
 	v := validator.New()
 	err := v.Struct(u)
 	if err != nil {
@@ -35,9 +32,17 @@ func AddUser(g *gin.Context) {
 		})
 		return
 	}
+	if model.AddUser(u) > 0 {
+		g.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "ok",
+			"data": u,
+		})
+	} else {
+		g.JSON(http.StatusOK, gin.H{
+			"code": 124,
+			"msg":  err,
+		})
+	}
 
-	g.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"data": u,
-	})
 }

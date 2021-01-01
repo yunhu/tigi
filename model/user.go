@@ -1,13 +1,18 @@
 package model
 
 import (
-	"fmt"
-	"tigi/common"
+	"tigi/client"
+	"tigi/st"
 )
 
-func Test() {
-	u := common.User{}
-	fmt.Println(u)
+func AddUser(ust st.UserModel) int64 {
+
+	mysqlClient := client.GetMysqlClient("frametest")
+	create := mysqlClient.Create(ust)
+	if create.Error != nil {
+		return 0
+	}
+	return create.RowsAffected
 
 	//创建
 	//u := User{Name: "zyh", Age: 333, Sex: 1}

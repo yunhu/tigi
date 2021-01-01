@@ -1,11 +1,18 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 	"tigi/client"
 	"tigi/common"
 	"tigi/router"
+	"time"
 )
 
 func main() {
@@ -19,6 +26,26 @@ func main() {
 	router.Register(engine)
 	ports := strconv.Itoa(config.Port)
 	//启动服务
-	engine.Run(":" + ports)
+	//engine.Run(":" + ports)
+	srv := http.Server{
+		Addr:    ":" + ports,
+		Handler: engine,
+	}
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			panic("httperror!")
+		}
+	}()
+	//平滑重启
+	quitSignal := make(chan os.Signal)
+	signal.Notify(quitSignal, os.Interrupt, syscall.SIGUSR2)
+	<-quitSignal
+	fmt.Println("开启重关闭")
+	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancelFunc()
+	if err := srv.Shutdown(ctx); err != nil {
+		fmt.Println("close error!")
+	}
+	fmt.Println("server closed!")
 
 }

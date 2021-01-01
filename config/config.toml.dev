@@ -5,23 +5,9 @@ port = 8088
     dbIndex = 0 #选用的db号
     pass = ""
     dbName = "user" #user的redis
-    timeout =1
 [[redis]]
     ip = "127.0.0.1:6379"
     db = 0
     pass = ""
     dbName = "goods" #goods的redis
-    timeout =1
 [[mysql]]
-    ip = "172.21.197.14:3306"
-    dbName = "user" #数据库名
-    pass = "1234"
-    user = "root" #数据库用户名
-    timeout =1 #单位秒
-[[mysql]]
-    ip = "172.21.197.14:3306"
-    dbName = "goods" #数据库名
-    pass = "1234"
-    user = "root"
-    timeout =1
-
