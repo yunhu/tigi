@@ -42,7 +42,7 @@ func GetConfig() config.Conf {
 		fmt.Println("现在默认是线上环境，如果要切换到线下请执行 export GODEVELOPMODE=dev")
 	} else {
 		gin.SetMode(gin.DebugMode)
-		fmt.Println("现在是在测试环境")
+		fmt.Println("现在是在测试环境,如果要切换到线下请执行 export GODEVELOPMODE=online 或者 export GODEVELOPMODE=")
 	}
 	filePath := dir + "/config/config.toml." + mode
 	if _, err := toml.DecodeFile(filePath, &conf); err != nil {

@@ -7,7 +7,12 @@ port = 8088
     dbName = "user" #user的redis
 [[redis]]
     ip = "127.0.0.1:6379"
-    db = 0
+    dbIndex = 0
     pass = ""
     dbName = "goods" #goods的redis
 [[mysql]]
+    ip = "127.0.0.1:3306"
+    dbName = "frametest" #数据库名
+    pass = "4L6jJ_Kc!"
+    user = "sf_N_S" #数据库用户名
+    timeout =1 #单位秒

@@ -10,7 +10,7 @@ build:
 	go fmt ./...
 	go build  -o "$(OUTPUT)$(APP)" main.go
 run:
-	nohup $(OUTPUT)$(APP) &
+	nohup $(OUTPUT)$(APP) > $(CURDIR)/log/access.log &
 stop:
 	ps -ef |grep $(APP) |grep -v grep|awk '{print $$2}'|xargs kill -USR2
 

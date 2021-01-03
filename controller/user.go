@@ -13,7 +13,7 @@ import (
 func GetUser(g *gin.Context) {
 	g.JSON(200, "")
 }
-func AddUser(g *gin.Context) {
+func AddMem(g *gin.Context) {
 	u := st.UserModel{}
 	Name, _ := g.GetPostForm("name")
 	Age, _ := g.GetPostForm("age")
@@ -25,6 +25,7 @@ func AddUser(g *gin.Context) {
 	u.Sex = uint64(sex)
 	v := validator.New()
 	err := v.Struct(u)
+	//logrus.Infof("adduser方法", u)
 	if err != nil {
 		g.JSON(http.StatusOK, gin.H{
 			"code": 33,
