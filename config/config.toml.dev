@@ -11,8 +11,8 @@ port = 8088
     pass = ""
     dbName = "goods" #goods的redis
 [[mysql]]
-    ip = "127.0.0.1:3306"
-    dbName = "frametest" #数据库名
-    pass = "4L6jJ_Kc!"
+    ip = "116.85.50.145:3886"
+    dbName = "test" #数据库名
+    pass = "4L6jJ_a73"
     user = "sf_N_S" #数据库用户名
     timeout =1 #单位秒

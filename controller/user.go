@@ -11,7 +11,8 @@ import (
 
 //
 func GetUser(g *gin.Context) {
-	g.JSON(200, "")
+	id, _ := g.GetPostForm("id")
+	g.JSON(200, id)
 }
 func AddMem(g *gin.Context) {
 	u := st.UserModel{}

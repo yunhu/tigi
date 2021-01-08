@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime"
 	"strconv"
 	"syscall"
 	"tigi/client"
@@ -16,6 +18,13 @@ import (
 )
 
 func main() {
+	defer func() {
+		if err := recover();err !=nil{
+			log.Fatal("出错了:",err)
+		}
+	}()
+	// 启动多核调度
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	//关闭控制台颜色
 	gin.DisableConsoleColor()
 	//初始化配置
@@ -24,10 +33,13 @@ func main() {
 	client.InitClient(&config)
 	//gin 初始化引擎
 	engine := gin.Default()
-	//engine.Use(middleware.LogerMiddleware())
 	//注册路由
 	router.Register(engine)
 	ports := strconv.Itoa(config.Port)
+	//协程
+	//p:=worker.NewPool(5)
+	//p.Run()
+
 	//启动服务
 	srv := http.Server{
 		Addr:    ":" + ports,
