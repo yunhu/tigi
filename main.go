@@ -14,6 +14,7 @@ import (
 	"tigi/client"
 	"tigi/common"
 	"tigi/router"
+	"tigi/worker"
 	"time"
 )
 
@@ -37,8 +38,8 @@ func main() {
 	router.Register(engine)
 	ports := strconv.Itoa(config.Port)
 	//协程
-	//p:=worker.NewPool(5)
-	//p.Run()
+	p:=worker.NewPool(5)
+	p.Run()
 
 	//启动服务
 	srv := http.Server{
@@ -46,13 +47,17 @@ func main() {
 		Handler: engine,
 	}
 	go func() {
+	    fmt.Println("before")
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			panic("httperror!")
 		}
+		fmt.Println("start " +ports)
 	}()
 	//平滑重启
 	quitSignal := make(chan os.Signal)
 	signal.Notify(quitSignal, os.Interrupt, syscall.SIGUSR2)
+	fmt.Println("sleep")
+	time.Sleep(time.Second * 5)
 	<-quitSignal
 	fmt.Println("开始关闭")
 	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Second*5)

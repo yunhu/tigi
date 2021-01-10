@@ -4,15 +4,15 @@ import "fmt"
 
 //任务 类型
 type Task struct {
-	taskId int
-	f func(interface{} ) error
+	TaskId int
+	F func(interface{} ) error
 }
 
 //创建任务
 func NewTask(id int,f func(interface{}) error) *Task{
 	return &Task{
-		taskId: id,
-		f:f,
+		TaskId: id,
+		F:f,
 	}
 }
 
@@ -34,9 +34,14 @@ func NewPool(num int) *Pool {
 //worker执行
 func (p *Pool) worker(id int)  {
 	for task:=range p.workerChan{
-		task.f(task.taskId)
-		fmt.Println("worker ID:",id,"taskID:",task.taskId,"is done")
+		task.F(task.TaskId)
+		fmt.Println("worker ID:",id,"taskID:",task.TaskId,"is done")
 	}
+}
+func (p *Pool)SengToWorker(task *Task)  {
+		p.workerChan <- task
+		return
+
 }
 //协程池启动
 func (p *Pool) Run()  {
@@ -45,8 +50,10 @@ func (p *Pool) Run()  {
 		fmt.Println("workerID",i,"已经启动！")
 	}
 
-	for task :=range p.EntryChan{
-		p.workerChan <- task
-	}
+	go func() {
+		for task :=range p.EntryChan{
+			p.workerChan <- task
+		}
+	}()
 
 }
