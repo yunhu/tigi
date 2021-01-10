@@ -3,8 +3,15 @@ package model
 import (
 	"tigi/client"
 	"tigi/st"
+	"time"
 )
 
+func SyncToRedis(num interface{}) error{
+	redisClient := client.GetRedisClient("goods")
+	time.Sleep(time.Second * 10)
+	set := redisClient.Set("taskId", num, time.Duration(0))
+	return set.Err()
+}
 func AddUser(ust st.UserModel) int64 {
 
 	mysqlClient := client.GetMysqlClient("frametest")

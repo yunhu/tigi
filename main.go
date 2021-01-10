@@ -56,8 +56,6 @@ func main() {
 	//平滑重启
 	quitSignal := make(chan os.Signal)
 	signal.Notify(quitSignal, os.Interrupt, syscall.SIGUSR2)
-	fmt.Println("sleep")
-	time.Sleep(time.Second * 5)
 	<-quitSignal
 	fmt.Println("开始关闭")
 	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Second*5)

@@ -1,38 +1,30 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 	"strconv"
-	"tigi/client"
 	"tigi/model"
 	"tigi/st"
 	"tigi/worker"
-	"time"
 )
 
 //
-func SyncToRedis(num interface{})  error{
-	redisClient := client.GetRedisClient("goods")
-	time.Sleep(time.Second * 3)
-	set := redisClient.Set("taskId", num, time.Duration(0))
-	return set.Err()
-}
 
+
+//测试协程池的使用
 func GetUser(g *gin.Context) {
 	id, _ := g.GetPostForm("id")
 	cid, _:= strconv.Atoi(id)
-	f:=SyncToRedis
+	f:=model.SyncToRedis
 		t  := &worker.Task{
 			TaskId: cid,
 			F:      f,
 		}
 
 
-	worker.Se
-
+	worker.WP.SengToWorker(t)
 
 	g.JSON(200, id)
 }

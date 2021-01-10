@@ -1,11 +1,11 @@
 package worker
 
 import "fmt"
-
+var WP *Pool
 //任务 类型
 type Task struct {
 	TaskId int
-	F func(interface{} ) error
+	F func(interface{}) error
 }
 
 //创建任务
@@ -19,16 +19,15 @@ func NewTask(id int,f func(interface{}) error) *Task{
 //协程池结构
 type Pool struct {
 	workerNum int
-	EntryChan chan *Task
 	workerChan chan *Task
 }
 //初始化
 func NewPool(num int) *Pool {
-	return &Pool{
+	WP =&Pool{
 		workerNum: num,
-		EntryChan: make(chan *Task),
 		workerChan: make(chan *Task),
 	}
+	return WP
 }
 
 //worker执行
@@ -49,11 +48,4 @@ func (p *Pool) Run()  {
 		go p.worker(i)
 		fmt.Println("workerID",i,"已经启动！")
 	}
-
-	go func() {
-		for task :=range p.EntryChan{
-			p.workerChan <- task
-		}
-	}()
-
 }
