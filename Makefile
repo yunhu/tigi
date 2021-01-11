@@ -14,5 +14,10 @@ run:
 stop:
 	ps -ef |grep $(APP) |grep -v grep|awk '{print $$2}'|xargs kill -USR2
 
+init:
+	rm -rf go.mod
+	rm -rf go.sum
+	go mod init tigi
+	go mod tidy
 
-.PHONY: build stop run
+.PHONY: build stop run init
