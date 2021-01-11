@@ -1,3 +1,9 @@
+## 初始化
+```
+git clone https://github.com/yunhu/tigi.git
+cd tigi
+make init
+```
 ## tigi
 
 ### 构建
