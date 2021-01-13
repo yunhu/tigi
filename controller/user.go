@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 	"strconv"
@@ -12,20 +13,19 @@ import (
 
 //
 
-
 //测试协程池的使用
 func GetUser(g *gin.Context) {
 	id, _ := g.GetPostForm("id")
-	cid, _:= strconv.Atoi(id)
-	f:=model.SyncToRedis
-		t  := &worker.Task{
-			TaskId: cid,
-			F:      f,
-		}
-
+	cid, _ := strconv.Atoi(id)
+	f := model.SyncToRedis
+	t := &worker.Task{
+		TaskId: cid,
+		F:      f,
+	}
 
 	worker.WP.SengToWorker(t)
-
+	logrus.Info("adduser方法", t)
+	logrus.Error("错误", t.F, t.TaskId)
 	g.JSON(200, id)
 }
 func AddMem(g *gin.Context) {

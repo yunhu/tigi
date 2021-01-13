@@ -20,8 +20,8 @@ import (
 
 func main() {
 	defer func() {
-		if err := recover();err !=nil{
-			log.Fatal("出错了:",err)
+		if err := recover(); err != nil {
+			log.Fatal("出错了:", err)
 		}
 	}()
 	// 启动多核调度
@@ -38,7 +38,7 @@ func main() {
 	router.Register(engine)
 	ports := strconv.Itoa(config.Port)
 	//协程
-	p:=worker.NewPool(5)
+	p := worker.NewPool(5)
 	p.Run()
 
 	//启动服务
@@ -47,11 +47,11 @@ func main() {
 		Handler: engine,
 	}
 	go func() {
-	    fmt.Println("before")
+		fmt.Println("before")
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			panic("httperror!")
 		}
-		fmt.Println("start " +ports)
+		fmt.Println("start " + ports)
 	}()
 	//平滑重启
 	quitSignal := make(chan os.Signal)

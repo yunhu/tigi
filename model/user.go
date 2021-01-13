@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func SyncToRedis(num interface{}) error{
+func SyncToRedis(num interface{}) error {
 	redisClient := client.GetRedisClient("goods")
 	time.Sleep(time.Second * 10)
 	set := redisClient.Set("taskId", num, time.Duration(0))
