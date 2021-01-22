@@ -1,19 +1,19 @@
 #端口
 port = 8088
 [[redis]]
-    ip = "127.0.0.1:6379"
+    ip = "127.0.0.1:379"
     dbIndex = 0 #选用的db号
     pass = ""
     dbName = "user" #user的redis
 [[redis]]
-    ip = "127.0.0.1:6379"
+    ip = "127.0.0.1:379"
     dbIndex = 0
     pass = ""
     dbName = "goods" #goods的redis
 [[mysql]]
-    ip = "116."
+    ip = "116.85.50.15:3306"
     dbName = "test" #数据库名
-    pass = "!"
-    user = "sf_N_" #数据库用户名
+    pass = "4L6jJ_!"
+    user = "sf_N_S" #数据库用户名
     timeout =1 #单位秒
 

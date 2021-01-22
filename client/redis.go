@@ -1,8 +1,8 @@
 package client
 
 import (
-	"fmt"
 	"github.com/go-redis/redis"
+	"github.com/sirupsen/logrus"
 	"tigi/config"
 )
 
@@ -48,8 +48,8 @@ func OpenRedis(conf *config.Conf) {
 		err := rc.Ping().Err()
 
 		if err != nil {
-			fmt.Println(err.Error())
-			panic("redis 初始化失败")
+			logrus.Error("Redis init error:", err.Error())
+			//			panic("redis 初始化失败")
 		} else {
 			RedisHandle = make(map[string]*redis.Client)
 			RedisHandle[v.DbName] = rc

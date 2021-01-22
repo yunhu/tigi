@@ -18,14 +18,17 @@ func GetUser(g *gin.Context) {
 	id, _ := g.GetPostForm("id")
 	cid, _ := strconv.Atoi(id)
 	f := model.SyncToRedis
-	t := &worker.Task{
+	d := &worker.TaskData{
 		TaskId: cid,
-		F:      f,
+	}
+	t := &worker.Task{
+		Data: d,
+		F:    f,
 	}
 
 	worker.WP.SengToWorker(t)
 	logrus.Info("adduser方法", t)
-	logrus.Error("错误", t.F, t.TaskId)
+	logrus.Error("错误", t.F, t.Data)
 	g.JSON(200, id)
 }
 func AddMem(g *gin.Context) {

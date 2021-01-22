@@ -39,7 +39,8 @@ func OpenMysql(conf *config.Conf) {
 		dsn := v.User + ":" + v.Pass + "@(" + v.IP + ")/" + v.DbName + "?charset=utf8&parseTime=True&loc=Local&timeout=" + timeout + "s"
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		if err != nil {
-			panic(err)
+			//panic(err)
+			//logrus.Error(" mysql init fail :",err.Error())
 		} else {
 			MysqlHandle[v.DbName] = db
 		}

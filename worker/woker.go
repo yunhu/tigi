@@ -4,17 +4,21 @@ import "fmt"
 
 var WP *Pool
 
+type TaskData struct {
+	TaskId int
+}
+
 //任务 类型
 type Task struct {
-	TaskId int
-	F      func(interface{}) error
+	Data *TaskData
+	F    func(data *TaskData) error
 }
 
 //创建任务
-func NewTask(id int, f func(interface{}) error) *Task {
+func NewTask(data *TaskData, f func(*TaskData) error) *Task {
 	return &Task{
-		TaskId: id,
-		F:      f,
+		Data: data,
+		F:    f,
 	}
 }
 
@@ -36,8 +40,8 @@ func NewPool(num int) *Pool {
 //worker执行
 func (p *Pool) worker(id int) {
 	for task := range p.workerChan {
-		task.F(task.TaskId)
-		fmt.Println("worker ID:", id, "taskID:", task.TaskId, "is done")
+		task.F(task.Data)
+		fmt.Println("worker ID:", id, "taskID:", task.Data, "is done")
 	}
 }
 func (p *Pool) SengToWorker(task *Task) {
